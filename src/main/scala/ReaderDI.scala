@@ -53,8 +53,10 @@ object Main extends App {
   val course = Course("Computer Science", "CS")
   val env = new Environment(new AuthService, new CourseService)
 
-  val register1 = new CourseManager().registerWhenAuthorised(course, "Jack")
-  val register2 = new CourseManager().registerWhenAuthorised(course, "Sam")
+  private val manager = new CourseManager()
+
+  val register1 = manager.registerWhenAuthorised(course, "Jack")
+  val register2 = manager.registerWhenAuthorised(course, "Sam")
 
   println(register1.run(env))
   println(register2.run(env))
