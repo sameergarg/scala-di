@@ -74,7 +74,7 @@ object CakeDI {
   }
 }
 
-object ConstructorCake extends App {
+object CakeMain extends App {
   val course = Course("Computer Science", "CS")
 
   //wiring all together
