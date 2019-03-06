@@ -2,16 +2,25 @@ import GuiceDI.{Course, CourseManager}
 import com.google.inject.{AbstractModule, Guice, Inject}
 import net.codingwell.scalaguice.ScalaModule
 
+/**
+  * Register authorised users to a course
+  */
 object GuiceDI {
 
   case class Course(code: String, name: String)
 
   //Individual service / Dependencies
+
+  /**
+    * Checks if user is registered
+    */
   class AuthService {
     def isAuthorised(userName: String): Boolean = userName.startsWith("J")
   }
 
-  //Individual service / Dependencies
+  /**
+    * Register user in a course if authorised
+    */
   class CourseService {
     def register(course: Course, userName: String, isAuthorised: Boolean) = {
       if (isAuthorised)
@@ -22,6 +31,11 @@ object GuiceDI {
   }
 
   //DI
+  /**
+    * Facade with collaborators
+    * @param authService
+    * @param courseService
+    */
   class CourseManager @Inject()(authService: AuthService, courseService: CourseService) {
 
     def registerWhenAuthorised(course: Course, userName: String): String = {
@@ -32,7 +46,7 @@ object GuiceDI {
     }
   }
 
-  //Guice Module
+  //Guice Module - like component registry
   class MyModule extends AbstractModule with ScalaModule {
     override def configure(): Unit = {
       bind[AuthService]
@@ -43,12 +57,12 @@ object GuiceDI {
 }
 
 object GuiceMain extends App {
-  val course = Course("Computer Science", "CS")
-
   import net.codingwell.scalaguice.InjectorExtensions._
 
   val injector = Guice.createInjector()
   val service = injector.instance[CourseManager]
+
+  val course = Course("Computer Science", "CS")
   val register1 = service.registerWhenAuthorised(course, "Jack")
   val register2 = service.registerWhenAuthorised(course, "Sam")
 

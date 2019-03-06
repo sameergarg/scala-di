@@ -94,4 +94,9 @@ object CakeMain extends App {
   * override def courseService: CourseService = mock[CourseService]
   * override def authService: AuthService = mock[AuthService]
   * }
+  *
+  * or
+  *
+  * new CourseManagerComponentImpl with StubbedCourseServiceComponent with StubbedAuthServiceComponent {
+  * }
   */

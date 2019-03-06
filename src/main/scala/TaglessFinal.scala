@@ -1,6 +1,5 @@
-import TaglessFinalApp.register1
 import TaglessFinalDI._
-import cats.{Id, Monad}
+import cats.Monad
 import cats.effect.IO
 import cats.implicits._
 
